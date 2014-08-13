@@ -29,3 +29,11 @@ searchSub xs ys = foldr (\x acc -> (take listLen x == xs) || acc) False (List.ta
 
 searchKey :: (Eq k) => k -> [(k, v)] -> Maybe v
 searchKey k = foldr (\(x, y) acc -> if x == k then Just y else acc) Nothing 
+
+-- Implementation of the Prelude.span function
+
+mySpan :: (a -> Bool) -> [a] -> ([a], [a])
+mySpan _ [] = ([], [])
+mySpan p l@(x:xs) 
+         | p x = (x : (fst $ mySpan p xs), snd $ mySpan p xs)
+         | otherwise = ([], l)
